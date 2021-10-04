@@ -1,0 +1,63 @@
+﻿<Window x:Class="YoutubeDownloader4CNN.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:YoutubeDownloader4CNN"
+        xmlns:localDataCon ="clr-namespace:YDL_Downloader;assembly=YDL_Downloader"
+        xmlns:funclocal="clr-namespace:Functional;assembly=Functional"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="416.584" Width="806.683">
+    <Window.Resources>
+        <localDataCon:DateConverter x:Key="dateConverter"/>
+        <localDataCon:ListAudioData x:Key="listAudioData"/>
+        <funclocal:User x:Key="user"/>
+    </Window.Resources>
+    <Grid x:Name="grid1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="183*" />
+        </Grid.RowDefinitions>
+        <Button x:Name="ButtonStartDownload" Grid.Column="0" Grid.ColumnSpan="1" Content="Начать загрузку"  Click="StartDownload" HorizontalAlignment="Stretch" Width="auto" Height="20" VerticalAlignment="Top" />
+        <Button x:Name="ButtonFinishDownload" Grid.Column="1" Grid.ColumnSpan="1" Content="Закончить загрузку" Click="FinishDownload" HorizontalAlignment="Stretch" Width="auto" Height="20" VerticalAlignment="Top" RenderTransformOrigin="1.748,0.3" />
+        <Button x:Name="ButtonRequestStatus"  Grid.Column="2" Grid.ColumnSpan="1" Content="Запросить статус" Click="RequestStatus" HorizontalAlignment="Stretch" Width="auto" Height="20" VerticalAlignment="Top" />
+
+        <TextBox x:Name="BoxCountDowload" Text="100" Grid.Column="4" Grid.ColumnSpan="1" Grid.Row="1" VerticalAlignment="Top" PreviewTextInput="BoxCountDowload_PreviewTextInput" LostFocus="BoxCountDowload_LostFocus" TextOptions.TextHintingMode="Animated"/>
+        <DataGrid x:Name="audioDatas" ItemsSource="{Binding Path=listAudioData}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Top" AutoGenerateColumns="False" Height="auto" Width="auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="id" Binding="{Binding Path=Id}" Width="*" />
+                <DataGridTextColumn Header="start" Binding="{Binding Path=Start}" Width="*" />
+                <DataGridTextColumn Header="end" Binding="{Binding Path=End}" Width="*" />
+                <DataGridTextColumn Header="cats" Binding="{Binding Path=Cats, Converter={StaticResource dateConverter}}" Width="*" />
+                <DataGridTextColumn Header="ready" Binding="{Binding Path=Ready}" Width="*" />
+            </DataGrid.Columns>
+
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
+                    <Setter Property="HorizontalContentAlignment" Value="Right" />
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>
+        
+        <DataGrid x:Name="userDatas" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Top" ItemsSource="{Binding Path=user}" AutoGenerateColumns="False" Height="auto" Width="auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Ip" Binding="{Binding Path=IpAddress}" Width="*" />
+                <DataGridTextColumn Header="Users" Binding="{Binding Path=userName}" Width="*" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Path=clientStatus}" Width="*" />
+            </DataGrid.Columns>
+
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
+                    <Setter Property="HorizontalContentAlignment" Value="Right" />
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>
+    </Grid>
+</Window>
